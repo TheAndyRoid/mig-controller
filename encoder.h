@@ -14,7 +14,7 @@ int read_encoder_rotation();
 extern unsigned int encoder_button_reset;
 int read_encoder_button_pushed();
 //same as read_encoder_rotation, but multiplies result based on 
-//the interval between 4 rotations
+//the interval between  rotations
 
 extern unsigned long encoder_last_time;
 extern unsigned int interval_sum;

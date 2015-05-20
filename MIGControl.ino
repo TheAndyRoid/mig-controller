@@ -48,8 +48,6 @@ trigger|       on      |     on      |     on        |     on       |      on   
 #include "lcd.h"
 #include "state.h"
 
-
-
 #include "pins.h"
 
 
@@ -109,43 +107,41 @@ void setup() {
   delay(1000);
 
   init_menu(&root_menu);
-  
-
-
 }
 
 
 void loop() {
 
   
-//GUI controls
-show_menu();
+  //GUI controls
+  show_menu();
   
-//read torch
- torch_trigger_pulled = digitalRead(PIN_TORCH_TRIGGER);
- thermal_overload = digitalRead(PIN_THERMAL_SAFETY);
- voltage = (float)(analogRead(PIN_VOLTAGE_READ)*5)/1024.0;  //read and calculate voltage
- amps = ((float)(analogRead(PIN_CURRENT_READ)*300)/1024.0);  //read and calculate amps
+  //read torch
+  torch_trigger_pulled = digitalRead(PIN_TORCH_TRIGGER);
+  thermal_overload = digitalRead(PIN_THERMAL_SAFETY);
+  
+  voltage = (float)(analogRead(PIN_VOLTAGE_READ)*5)/1024.0;  //read and calculate voltage
+  amps = ((float)(analogRead(PIN_CURRENT_READ)*300)/1024.0);  //read and calculate amps
+ 
+ 
 
-
-
- torch_mode_control(&torch_trigger_pulled,welder_state);
-
-
- if (thermal_overload){
-   torch_trigger_pulled = false;
-   display_string_value("OVER DUTY CYCLE!",1);
- }
-
-
- update_welder_state(torch_trigger_pulled,amps,&welder_state);
- //apply settings
-
+  torch_mode_control(&torch_trigger_pulled,welder_state);
+  
+  
+  if (thermal_overload){
+    torch_trigger_pulled = false;
+    display_string_value("OVER DUTY CYCLE!",1);
+  }
+ 
+ 
+  update_welder_state(torch_trigger_pulled,amps,&welder_state);
+  //apply settings
+ 
  
  set_outputs(welder_state);
 
  
-
+ 
  render_display();
 }
 
